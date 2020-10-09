@@ -19,6 +19,7 @@ class Posts extends Component
 
     public function addPost()
     {
+        if ($this->newPost == '') return;
         array_unshift($this->posts, [
             'body' => $this->newPost,
             'creator' => 'Tom Erik Sortland',

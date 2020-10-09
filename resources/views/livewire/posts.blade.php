@@ -1,19 +1,19 @@
 <div class="flex justify-center">
     <div class="w-6/12">
     <h1 class="my-10 text-3x1">Comments</h1>
-    <div class="my-4 flex">
+    <form class="my-4 flex" wire:submit.prevent='addPost'>
         <input 
         type="text" 
         class="w-full rounded border shadow p-2 mr-2 my-2" 
         placeholder="What's on your mind?"
-        wire:model="newPost"
+        wire:model.lazy="newPost"
         >
         <div class="py-2">
-            <button 
-            class="p-2 bg-blue-500 w-20 rounded shadow text-white" 
-            wire:click="addPost">Add
-        </button>
-        </div>
+            <button
+            type="submit"
+            class="p-2 bg-blue-500 w-20 rounded shadow text-white"
+            >Add</button>
+    </form>
     </div>
     @foreach($posts as $post)
     <div class="rounded border shadow p-3 my-2">
