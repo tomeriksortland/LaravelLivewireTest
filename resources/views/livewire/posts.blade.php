@@ -14,6 +14,7 @@
         </div>
         @endif
     </div>
+    
 
     <form class="my-4 flex" wire:submit.prevent='addPostToDB'>
         <input 
@@ -52,3 +53,4 @@
     {{ $posts->links('pagination-links') }}
     </div>
 </div>
+

@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +13,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    //Gjør request til databasen om å hente alle postene som ligger der, lagrer de i $allPosts variabelen og sender de med til welcome viewet.
-    return view('welcome');
-});
+Route::get('/', App\Http\Livewire\Home::class);
+Route::get('/login', App\Http\Livewire\Login::class);

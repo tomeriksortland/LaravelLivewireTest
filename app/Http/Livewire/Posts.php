@@ -3,8 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Models\Post;
-use Carbon\Carbon;
-use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -15,7 +13,19 @@ class Posts extends Component
 
     //variabel som holder på dataen fra input feltet i posts.blade.php.
     public $newPost;
+    public $newImage;
+    public $ticketId;
 
+    protected $listeners = [
+        'fileUpload' => 'handleFileUpload',
+        'ticketSelected' => 'ticketSelected'
+    ];
+
+
+    public function ticketSelected($ticketId)
+    {
+        $this->ticketId = $ticketId;
+    }
 
     //Gjør real time validation, det vil si at den validerer etter som man skriver men blokerer ikke en request om å lagre, det gjør man i validaten som ligger i 'addPostToDB()'
     public function updated($field)
@@ -37,6 +47,7 @@ class Posts extends Component
         $createdPost = Post::create([
             'body' => $this->newPost,
             'user_id' => 1,
+            'support_ticket_id' => $this->ticketId,
         ]);
 
         $this->newPost = "";
@@ -49,11 +60,12 @@ class Posts extends Component
         session()->flash('message', 'Post successfully deleted.');
     }
 
+
     //gjør en spørring til databasen etter Postene som ligger i databasen. Den spør også etter en pagination med 2 "items" per page.
     public function render()
     {
         return view('livewire.posts', [
-            'posts' => Post::latest()->paginate(2)
+            'posts' => Post::where('support_ticket_id', $this->ticketId)->latest()->paginate(2),
         ]);
     }
 }
